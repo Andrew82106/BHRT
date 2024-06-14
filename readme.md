@@ -1,4 +1,4 @@
-# : BMP 文件头和图像头恢复工具
+# BMP Header Recover Tool: BMP 文件头和图像头恢复工具
 
 该项目提供了一个用于恢复损坏的 BMP 文件头和图像头的工具。主要类 `bmp24` 继承自 `Recovery` 类，包含检查和恢复 BMP 文件头和图像头中各个字段的方法。当前该工具专为 24 位颜色深度的 BMP 文件设计。
 
@@ -9,6 +9,12 @@
 - **检查图像头**：识别 BMP 图像头中缺失或损坏的字段。
 - **恢复图像头**：自动恢复 BMP 图像头中缺失或损坏的字段。
 - **计算可能的图像尺寸**：根据图像数据大小计算可能的宽度和高度。
+  
+自动计算分辨率恢复样例（正确分辨率恢复结果与错误分辨率恢复结果）：
+
+![恢复示例](./base/all_resolution/recovery_0.bmp)
+
+![恢复示例](./base/all_resolution/recovery_3.bmp)
 
 ## 快速开始
 
@@ -45,11 +51,11 @@ python main.py
 
 该程序会读取损坏的 BMP 文件，检查并恢复文件头和图像头，并将恢复后的文件保存在 `base/` 目录下。
 
-好的，以下是一些使用 `recovery24.py` 中提供的接口的样例，展示如何使用这些接口来恢复 BMP 文件头和图像头。
+当启用了``recovery_image_head``方法的``fast``参数后，程序不会尝试恢复所有可能的分辨率。否则程序将会把所有可能的分辨率的恢复结果放在`base/all_resolution` 目录下，恢复完成后可查看该文件夹下的文件即可得到最符合实际的恢复结果。
 
-### 接口示例代码
+## 接口示例代码
 
-#### 导入所需模块
+### 导入所需模块
 
 ```python
 from recovery24 import bmp24
@@ -62,7 +68,7 @@ bmp_content = read('./brokenImg/实验练习2')
 bmp_recovery = bmp24(bmp_content)
 ```
 
-#### 检查和恢复 BMP 文件头
+### 检查和恢复 BMP 文件头
 
 ```python
 # 检查文件头
@@ -78,7 +84,7 @@ bmp_content = bmp_recovery.bmp_content
 save(bmp_content, './base/recovered_file_head.bmp')
 ```
 
-#### 检查和恢复 BMP 图像头
+### 检查和恢复 BMP 图像头
 
 ```python
 # 检查图像头
@@ -94,7 +100,7 @@ bmp_content = bmp_recovery.bmp_content
 save(bmp_content, './base/recovered_image_head.bmp')
 ```
 
-#### 恢复所有可能分辨率的图像头
+### 恢复所有可能分辨率的图像头
 
 ```python
 # 使用 fast=0 恢复所有可能分辨率的图像头
@@ -105,9 +111,9 @@ for index, bmp_content in enumerate(bmp_recovery.all_resolution):
     save(bmp_content, f'./base/all_resolution/recovered_{index}.bmp')
 ```
 
-### 接口说明
+## 接口说明
 
-#### `bmp24` 类
+### `bmp24` 类
 
 - **`check_file_head()`**
 
@@ -131,7 +137,7 @@ for index, bmp_content in enumerate(bmp_recovery.all_resolution):
     - `fast`：是否快速模式。如果为 0，则尝试用所有可能的分辨率进行恢复；否则只恢复一个分辨率。
   - 返回恢复后的图像头。
 
-#### `process` 模块
+### `process` 模块
 
 - **`read(fileLocation, baseLocation)`**
 
@@ -155,7 +161,7 @@ for index, bmp_content in enumerate(bmp_recovery.all_resolution):
     - `offset_end`：结束偏移量。
     - `new_value`：新的十六进制值。
 
-### 提醒
+## 提醒
 
 当前的 `bmp24` 库只能对 24 位颜色深度的 BMP 图像头进行恢复。如果您需要恢复其他位数的 BMP 图像头，可以基于 `Recovery.py` 定义的框架，提供其他位数图像的恢复代码。
 
