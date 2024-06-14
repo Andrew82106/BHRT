@@ -14,7 +14,7 @@
 
 ![恢复示例](./base/all_resolution/recovery_0.bmp)
 
-![恢复示例](./base/all_resolution/recovery_3.bmp)
+![恢复示例](./base/all_resolution/recovery_11.bmp)
 
 ## 快速开始
 
@@ -35,8 +35,8 @@ pip install tqdm
 1. **克隆项目：**
 
 ```bash
-git clone https://github.com/your-repo/bmp-recovery.git
-cd bmp-recovery
+git clone https://github.com/Andrew82106/BHRT.git
+cd BHRT
 ```
 
 2. **准备损坏的 BMP 文件：**
